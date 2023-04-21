@@ -1,4 +1,4 @@
-local query = require("vim.treesitter.query")
+local treesitter = require("vim.treesitter")
 
 local M = {
   last_testname = "",
@@ -204,7 +204,7 @@ local function get_closest_test()
     for id, node in pairs(match) do
       local capture = test_query.captures[id]
       if capture == "testname" then
-        local name = query.get_node_text(node, 0)
+        local name = treesitter.get_node_text(node, 0)
         test_match.name = name
       end
       if capture == "parent" then
@@ -221,7 +221,7 @@ local function get_closest_test()
     for id, node in pairs(match) do
       local capture = subtest_query.captures[id]
       if capture == "testname" then
-        local name = query.get_node_text(node, 0)
+        local name = treesitter.get_node_text(node, 0)
         test_match.name = string.gsub(string.gsub(name, " ", "_"), '"', "")
       end
       if capture == "parent" then
